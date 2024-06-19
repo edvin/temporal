@@ -73,6 +73,18 @@ persistence:
                 {{ $visibility_user := default .Env.VISIBILITY_MYSQL_USER $visibility_user_default }}
                 {{ $visibility_pwd_default := default .Env.MYSQL_PWD "" }}
                 {{ $visibility_pwd := default .Env.VISIBILITY_MYSQL_PWD $visibility_pwd_default }}
+                {{ $visibility_sql_tls_enabled_default := default .Env.SQL_TLS_ENABLED "false" }}
+                {{ $visibility_sql_tls_enabled := default .Env.VISIBILITY_SQL_TLS_ENABLED $visibility_sql_tls_enabled_default }}
+                {{ $visibility_sql_ca_default := default .Env.SQL_CA "" }}
+                {{ $visibility_sql_ca := default .Env.VISIBILITY_SQL_CA $visibility_sql_ca_default }}
+                {{ $visibility_sql_cert_default := default .Env.SQL_CERT "" }}
+                {{ $visibility_sql_cert := default .Env.VISIBILITY_SQL_CERT $visibility_sql_cert_default }}
+                {{ $visibility_sql_cert_key_default := default .Env.SQL_CERT_KEY "" }}
+                {{ $visibility_sql_cert_key := default .Env.VISIBILITY_SQL_CERT_KEY $visibility_sql_cert_key_default }}
+                {{ $visibility_sql_host_verification_default := default .Env.SQL_HOST_VERIFICATION "false" }}
+                {{ $visibility_sql_host_verification := default .Env.VISIBILITY_SQL_HOST_VERIFICATION $visibility_sql_host_verification_default }}
+                {{ $visibility_sql_host_name_default := default .Env.SQL_HOST_NAME "" }}
+                {{ $visibility_sql_host_name := default .Env.VISIBILITY_SQL_HOST_NAME $visibility_sql_host_name_default }}
                 pluginName: "{{ $db }}"
                 databaseName: "{{ default .Env.VISIBILITY_DBNAME "temporal_visibility" }}"
                 connectAddr: "{{ $visibility_seeds }}:{{ $visibility_port }}"
@@ -87,12 +99,12 @@ persistence:
                 maxIdleConns: {{ default .Env.SQL_VIS_MAX_IDLE_CONNS "10" }}
                 maxConnLifetime: {{ default .Env.SQL_VIS_MAX_CONN_TIME "1h" }}
                 tls:
-                    enabled: {{ default .Env.SQL_TLS_ENABLED "false" }}
-                    caFile: {{ default .Env.SQL_CA "" }}
-                    certFile: {{ default .Env.SQL_CERT "" }}
-                    keyFile: {{ default .Env.SQL_CERT_KEY "" }}
-                    enableHostVerification: {{ default .Env.SQL_HOST_VERIFICATION "false" }}
-                    serverName: {{ default .Env.SQL_HOST_NAME "" }}
+                    enabled: {{ $visibility_sql_tls_enabled }}
+                    caFile: {{ $visibility_sql_ca }}
+                    certFile: {{ $visibility_sql_cert }}
+                    keyFile: {{ $visibility_sql_cert_key }}
+                    enableHostVerification: {{ $visibility_sql_host_verification }}
+                    serverName: {{ $visibility_sql_host_name }}
         {{- else if eq $db "postgres12" "postgres12_pgx" }}
         default:
             sql:
@@ -122,6 +134,18 @@ persistence:
                 {{ $visibility_user := default .Env.VISIBILITY_POSTGRES_USER $visibility_user_default }}
                 {{ $visibility_pwd_default := default .Env.POSTGRES_PWD "" }}
                 {{ $visibility_pwd := default .Env.VISIBILITY_POSTGRES_PWD $visibility_pwd_default }}
+                {{ $visibility_sql_tls_enabled_default := default .Env.SQL_TLS_ENABLED "false" }}
+                {{ $visibility_sql_tls_enabled := default .Env.VISIBILITY_SQL_TLS_ENABLED $visibility_sql_tls_enabled_default }}
+                {{ $visibility_sql_ca_default := default .Env.SQL_CA "" }}
+                {{ $visibility_sql_ca := default .Env.VISIBILITY_SQL_CA $visibility_sql_ca_default }}
+                {{ $visibility_sql_cert_default := default .Env.SQL_CERT "" }}
+                {{ $visibility_sql_cert := default .Env.VISIBILITY_SQL_CERT $visibility_sql_cert_default }}
+                {{ $visibility_sql_cert_key_default := default .Env.SQL_CERT_KEY "" }}
+                {{ $visibility_sql_cert_key := default .Env.VISIBILITY_SQL_CERT_KEY $visibility_sql_cert_key_default }}
+                {{ $visibility_sql_host_verification_default := default .Env.SQL_HOST_VERIFICATION "false" }}
+                {{ $visibility_sql_host_verification := default .Env.VISIBILITY_SQL_HOST_VERIFICATION $visibility_sql_host_verification_default }}
+                {{ $visibility_sql_host_name_default := default .Env.SQL_HOST_NAME "" }}
+                {{ $visibility_sql_host_name := default .Env.VISIBILITY_SQL_HOST_NAME $visibility_sql_host_name_default }}
                 pluginName: "{{ $db }}"
                 databaseName: "{{ default .Env.VISIBILITY_DBNAME "temporal_visibility" }}"
                 connectAddr: "{{ $visibility_seeds }}:{{ $visibility_port }}"
@@ -132,12 +156,12 @@ persistence:
                 maxIdleConns: {{ default .Env.SQL_VIS_MAX_IDLE_CONNS "10" }}
                 maxConnLifetime: {{ default .Env.SQL_VIS_MAX_CONN_TIME "1h" }}
                 tls:
-                    enabled: {{ default .Env.SQL_TLS_ENABLED "false" }}
-                    caFile: {{ default .Env.SQL_CA "" }}
-                    certFile: {{ default .Env.SQL_CERT "" }}
-                    keyFile: {{ default .Env.SQL_CERT_KEY "" }}
-                    enableHostVerification: {{ default .Env.SQL_HOST_VERIFICATION "false" }}
-                    serverName: {{ default .Env.SQL_HOST_NAME "" }}
+                    enabled: {{ $visibility_sql_tls_enabled }}
+                    caFile: {{ $visibility_sql_ca }}
+                    certFile: {{ $visibility_sql_cert }}
+                    keyFile: {{ $visibility_sql_cert_key }}
+                    enableHostVerification: {{ $visibility_sql_host_verification }}
+                    serverName: {{ $visibility_sql_host_name }}
         {{- end }}
         {{- if eq $es "true" }}
         es-visibility:
